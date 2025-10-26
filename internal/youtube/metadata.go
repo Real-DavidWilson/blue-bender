@@ -41,7 +41,7 @@ func FetchMetadata(query string) (*Metadata, error) {
 	ytStdout, err := cmd.StdoutPipe()
 
 	if err != nil {
-		log.Fatal("Error getting youtube stdout pipe", nil)
+		log.Println("Error getting youtube stdout pipe: ", err)
 		return nil, err
 	}
 
@@ -53,14 +53,14 @@ func FetchMetadata(query string) (*Metadata, error) {
 	rawMetadata, err = io.ReadAll(ytStdout)
 
 	if err != nil {
-		log.Println("Error on reading all youtube metadata", rawMetadata)
+		log.Println("Error on reading all youtube metadata: ", rawMetadata)
 		return nil, err
 	}
 
 	err = json.Unmarshal(rawMetadata, &metadata)
 
 	if err != nil {
-		log.Fatal("Error parsing youtube metadata json: ", err)
+		log.Println("Error parsing youtube metadata json: ", err)
 		return nil, err
 	}
 
